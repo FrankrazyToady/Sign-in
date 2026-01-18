@@ -91,6 +91,18 @@ document.getElementById('signOutButton').onclick = async () => {
   authMessage.style.color = 'green';
 };
 
+// --- Auth State Listener ---
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // Redirect to home page after login
+    window.location.href = "home.html";
+  } else {
+    // Show login form if user is signed out
+    document.getElementById('auth-forms').style.display = 'block';
+    document.getElementById('user-info').style.display = 'none';
+  }
+});
+
 // --- Auth State ---
 onAuthStateChanged(auth, (user) => {
   if(user) {

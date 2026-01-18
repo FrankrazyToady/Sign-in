@@ -11,7 +11,7 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// Firebase config
+// --- Firebase config ---
 const firebaseConfig = {
   apiKey: "AIzaSyBjUWLTD0tIUK_vfq0NIAmaagya9mNnEfc",
   authDomain: "dynamic-organization.firebaseapp.com",
@@ -21,31 +21,30 @@ const firebaseConfig = {
   appId: "1:574974660064:web:69908bdc3a35ae4884ef85"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// --- UI Elements ---
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const authMessage = document.getElementById('authMessage');
 
-// --- Email/Password ---
+// --- Email/Password Sign Up ---
 document.getElementById('signUpButton').onclick = async () => {
   try {
-    const user = await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-    authMessage.textContent = `User created: ${user.user.email}`;
-    authMessage.style.color = 'green';
-  } catch (e) {
+    await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+  } catch(e) {
     authMessage.textContent = e.message;
     authMessage.style.color = 'red';
   }
 };
 
+// --- Email/Password Sign In ---
 document.getElementById('signInButton').onclick = async () => {
   try {
-    const user = await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-    authMessage.textContent = `Signed in: ${user.user.email}`;
-    authMessage.style.color = 'green';
-  } catch (e) {
+    await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+  } catch(e) {
     authMessage.textContent = e.message;
     authMessage.style.color = 'red';
   }
@@ -54,17 +53,11 @@ document.getElementById('signInButton').onclick = async () => {
 // --- Google Sign-In ---
 const googleProvider = new GoogleAuthProvider();
 document.getElementById('googleSignInButton').onclick = async () => {
-  const btn = document.getElementById('googleSignInButton');
-  btn.disabled = true;
   try {
-    const result = await signInWithPopup(auth, googleProvider);
-    authMessage.textContent = `Signed in with Google: ${result.user.email}`;
-    authMessage.style.color = 'green';
-  } catch (e) {
+    await signInWithPopup(auth, googleProvider);
+  } catch(e) {
     authMessage.textContent = e.message;
     authMessage.style.color = 'red';
-  } finally {
-    btn.disabled = false;
   }
 };
 
@@ -75,41 +68,17 @@ document.getElementById('phoneSignInButton').onclick = async () => {
   try {
     const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
     const code = prompt("Enter the verification code sent to your phone:");
-    const result = await confirmationResult.confirm(code);
-    authMessage.textContent = `Signed in with phone: ${result.user.phoneNumber}`;
-    authMessage.style.color = 'green';
-  } catch (e) {
+    await confirmationResult.confirm(code);
+  } catch(e) {
     authMessage.textContent = e.message;
     authMessage.style.color = 'red';
   }
 };
 
-// --- Sign Out ---
-document.getElementById('signOutButton').onclick = async () => {
-  await signOut(auth);
-  authMessage.textContent = 'Signed out';
-  authMessage.style.color = 'green';
-};
-
-// --- Auth State Listener ---
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // Redirect to home page after login
-    window.location.href = "home.html";
-  } else {
-    // Show login form if user is signed out
-    document.getElementById('auth-forms').style.display = 'block';
-    document.getElementById('user-info').style.display = 'none';
-  }
-});
-
-// --- Auth State ---
+// --- Auth State Listener (redirects to home.html) ---
 onAuthStateChanged(auth, (user) => {
   if(user) {
-    // Redirect to home.html after login
+    // Redirect after login
     window.location.href = "home.html";
-  } else {
-    document.getElementById('auth-forms').style.display = 'block';
-    document.getElementById('user-info').style.display = 'none';
   }
 });

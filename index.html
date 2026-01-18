@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase Auth Example</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>My Awesome App</h1>
+
+        <div id="auth-forms">
+            <h2>Sign In / Sign Up</h2>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <button id="signInButton" class="auth-button">Sign In</button>
+            <button id="signUpButton" class="auth-button">Sign Up</button>
+
+            <p id="authMessage" class="message"></p>
+        </div>
+
+        <div id="user-info" style="display: none;">
+            <h2>Welcome!</h2>
+            <p>You are signed in as: <span id="userEmail"></span></p>
+            <button id="signOutButton" class="auth-button">Sign Out</button>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js"; // Import necessary auth functions
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBjUWLTD0tIUK_vfq0NIAmaagya9mNnEfc",
+            authDomain: "dynamic-organization.firebaseapp.com",
+            projectId: "dynamic-organization",
+            storageBucket: "dynamic-organization.firebasestorage.app",
+            messagingSenderId: "574974660064",
+            appId: "1:574974660064:web:69908bdc3a35ae4884ef85"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Initialize Firebase Authentication and get a reference to the service
+        const auth = getAuth(app);
+
+        // Get references to HTML elements
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const signInButton = document.getElementById('signInButton');
+        const signUpButton = document.getElementById('signUpButton');
+        const signOutButton = document.getElementById('signOutButton');
+        const authMessage = document.getElementById('authMessage');
+        const authForms = document.getElementById('auth-forms');
+        const userInfo = document.getElementById('user-info');
+        const userEmailSpan = document.getElementById('userEmail');
+
+        // Event Listeners
+        signUpButton.addEventListener('click', async () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                authMessage.textContent = `User created: ${userCredential.user.email}`;
+                authMessage.style.color = 'green';
+            } catch (error) {
+                authMessage.textContent = `Error creating user: ${error.message}`;
+                authMessage.style.color = 'red';
+            }
+        });
+
+        signInButton.addEventListener('click', async () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                authMessage.textContent = `User signed in: ${userCredential.user.email}`;
+                authMessage.style.color = 'green';
+            } catch (error) {
+                authMessage.textContent = `Error signing in: ${error.message}`;
+                authMessage.style.color = 'red';
+            }
+        });
+
+        signOutButton.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                authMessage.textContent = 'User signed out.';
+                authMessage.style.color = 'green';
+            } catch (error) {
+                authMessage.textContent = `Error signing out: ${error.message}`;
+                authMessage.style.color = 'red';
+            }
+        });
+
+        // Listen for authentication state changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in
+                authForms.style.display = 'none';
+                userInfo.style.display = 'block';
+                userEmailSpan.textContent = user.email;
+            } else {
+                // User is signed out
+                authForms.style.display = 'block';
+                userInfo.style.display = 'none';
+                userEmailSpan.textContent = '';
+            }
+        });
+
+    </script>
+</body>
+</html>

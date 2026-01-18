@@ -1,135 +1,121 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
 }
 
 .container {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
+  background-color: #fff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
 }
 
 h1, h2 {
-    color: #333;
-    margin-bottom: 20px;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .form-group {
-    margin-bottom: 15px;
-    text-align: left;
+  margin-bottom: 15px;
+  text-align: left;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
 }
 
 .form-group input[type="email"],
 .form-group input[type="password"],
 .form-group input[type="text"] {
-    width: calc(100% - 20px);
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
-/* --- BUTTONS --- */
 .auth-button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    margin: 5px 0;
-    transition: background-color 0.3s, transform 0.2s;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, transform 0.2s;
 }
 
-.auth-button:hover {
-    transform: translateY(-2px);
+.auth-button i {
+  margin-right: 8px;
 }
 
-/* Email/Password Buttons */
-#signInButton,
-#signUpButton {
-    background-color: #4CAF50;
-    color: white;
+#signInButton, #signUpButton { background-color: #4CAF50; color: white; 
 }
 
-#signInButton:hover,
-#signUpButton:hover {
-    background-color: #45a049;
+#signInButton:hover, #signUpButton:hover { 
+background-color: #45a049; 
 }
 
-/* Sign Out Button */
-#signOutButton {
-    background-color: #f44336;
-    color: white;
+#googleSignInButton { 
+background-color: #db4437;
+ color: white;
+ }
+
+#googleSignInButton:hover { 
+background-color: #c1351d; 
 }
 
-#signOutButton:hover {
-    background-color: #da190b;
-}
-
-/* Google Sign-In */
-#googleSignInButton {
-    background-color: #db4437;
-    color: white;
-}
-
-#googleSignInButton:hover {
-    background-color: #c1351d;
-}
-
-/* Phone Sign-In */
 #phoneSignInButton {
-    background-color: #0f9d58;
-    color: white;
+ background-color: #0f9d58; 
+color: white;
+ }
+
+#phoneSignInButton:hover { 
+background-color: #0b7a43;
+ }
+
+#signOutButton { 
+background-color: #f44336;
+ color: white; 
+}
+#signOutButton:hover { background-color: #da190b; }
+
+.message { 
+margin-top: 15px; 
+font-weight: bold; 
+text-align: center; 
 }
 
-#phoneSignInButton:hover {
-    background-color: #0b7a43;
+.message[style*="green"] { 
+color: green; 
+}
+.message[style*="red"] { 
+color: red; 
 }
 
-/* Auth message */
-.message {
-    margin-top: 15px;
-    font-weight: bold;
-    text-align: center;
+#recaptcha-container { 
+margin-top: 10px; 
 }
 
-.message[style*="green"] {
-    color: green;
-}
-
-.message[style*="red"] {
-    color: red;
-}
-
-/* Recaptcha container spacing */
-#recaptcha-container {
-    margin-top: 10px;
-}
-
-/* Responsive */
 @media (max-width: 450px) {
-    .container {
-        padding: 20px;
-    }
-
-    .auth-button {
-        font-size: 14px;
-        padding: 10px;
-    }
+  .container { 
+padding: 20px; 
 }
+
+  .auth-button { 
+font-size: 14px; 
+padding: 10px; 
+}}

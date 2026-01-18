@@ -1,236 +1,298 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Firebase Auth Example</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Auth Example</title>
+
+  <!-- Font Awesome for modern icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-pap9R..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- CSS Styling -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1, h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    .form-group input[type="email"],
+    .form-group input[type="password"],
+    .form-group input[type="text"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+
+    /* Buttons */
+    .auth-button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .auth-button i {
+      margin-right: 8px;
+    }
+
+    #signInButton, #signUpButton {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    #signInButton:hover, #signUpButton:hover {
+      background-color: #45a049;
+    }
+
+    #googleSignInButton {
+      background-color: #db4437;
+      color: white;
+    }
+
+    #googleSignInButton:hover {
+      background-color: #c1351d;
+    }
+
+    #phoneSignInButton {
+      background-color: #0f9d58;
+      color: white;
+    }
+
+    #phoneSignInButton:hover {
+      background-color: #0b7a43;
+    }
+
+    #signOutButton {
+      background-color: #f44336;
+      color: white;
+    }
+
+    #signOutButton:hover {
+      background-color: #da190b;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .message[style*="green"] {
+      color: green;
+    }
+
+    .message[style*="red"] {
+      color: red;
+    }
+
+    #recaptcha-container {
+      margin-top: 10px;
+    }
+
+    @media (max-width: 450px) {
+      .container {
+        padding: 20px;
+      }
+
+      .auth-button {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>My Awesome App</h1>
 
-        <div id="auth-forms">
-            <h2>Sign In / Sign Up</h2>
+  <div class="container">
+    <h1>My Awesome App</h1>
 
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" placeholder="Enter your email" required>
-            </div>
+    <div id="auth-forms">
+      <h2>Sign In / Sign Up</h2>
 
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" placeholder="Enter your password" required>
-            </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
 
-<button id="googleSignInButton">Sign in with Google</button>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Enter your password" required>
+      </div>
 
-<div>
-  <input type="text" id="phoneNumber" placeholder="+1234567890">
-  <button id="phoneSignInButton">Sign in with Phone</button>
-  <div id="recaptcha-container"></div>
-</div>
+      <button id="signInButton" class="auth-button">
+        <i class="fa-solid fa-envelope"></i> Sign In
+      </button>
+      <button id="signUpButton" class="auth-button">
+        <i class="fa-solid fa-user-plus"></i> Sign Up
+      </button>
 
-            <button id="signInButton" class="auth-button">Sign In</button>
-            <button id="signUpButton" class="auth-button">Sign Up</button>
+      <button id="googleSignInButton" class="auth-button">
+        <i class="fa-brands fa-google"></i> Sign in with Google
+      </button>
 
-            <p id="authMessage" class="message"></p>
-        </div>
+      <div class="form-group">
+        <input type="text" id="phoneNumber" placeholder="+1234567890">
+        <button id="phoneSignInButton" class="auth-button">
+          <i class="fa-solid fa-phone"></i> Sign in with Phone
+        </button>
+        <div id="recaptcha-container"></div>
+      </div>
 
-        <div id="user-info" style="display: none;">
-            <h2>Welcome!</h2>
-            <p>You are signed in as: <span id="userEmail"></span></p>
-            <button id="signOutButton" class="auth-button">Sign Out</button>
-        </div>
+      <p id="authMessage" class="message"></p>
     </div>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js"; // Import necessary auth functions
+    <div id="user-info" style="display: none;">
+      <h2>Welcome!</h2>
+      <p>You are signed in as: <span id="userEmail"></span></p>
+      <button id="signOutButton" class="auth-button">
+        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+      </button>
+    </div>
+  </div>
 
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBjUWLTD0tIUK_vfq0NIAmaagya9mNnEfc",
-            authDomain: "dynamic-organization.firebaseapp.com",
-            projectId: "dynamic-organization",
-            storageBucket: "dynamic-organization.firebasestorage.app",
-            messagingSenderId: "574974660064",
-            appId: "1:574974660064:web:69908bdc3a35ae4884ef85"
-        };
+  <!-- Firebase Auth JS -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithPopup,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      signOut,
+      RecaptchaVerifier,
+      signInWithPhoneNumber,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
+    // Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjUWLTD0tIUK_vfq0NIAmaagya9mNnEfc",
+      authDomain: "dynamic-organization.firebaseapp.com",
+      projectId: "dynamic-organization",
+      storageBucket: "dynamic-organization.appspot.com",
+      messagingSenderId: "574974660064",
+      appId: "1:574974660064:web:69908bdc3a35ae4884ef85"
+    };
 
-        // Initialize Firebase Authentication and get a reference to the service
-        const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-        // Get references to HTML elements
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const signInButton = document.getElementById('signInButton');
-        const signUpButton = document.getElementById('signUpButton');
-        const signOutButton = document.getElementById('signOutButton');
-        const authMessage = document.getElementById('authMessage');
-        const authForms = document.getElementById('auth-forms');
-        const userInfo = document.getElementById('user-info');
-        const userEmailSpan = document.getElementById('userEmail');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const authMessage = document.getElementById('authMessage');
 
-        // Event Listeners
-        signUpButton.addEventListener('click', async () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                authMessage.textContent = `User created: ${userCredential.user.email}`;
-                authMessage.style.color = 'green';
-            } catch (error) {
-                authMessage.textContent = `Error creating user: ${error.message}`;
-                authMessage.style.color = 'red';
-            }
-        });
+    // --- Email/Password ---
+    document.getElementById('signUpButton').onclick = async () => {
+      try {
+        const user = await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+        authMessage.textContent = `User created: ${user.user.email}`;
+        authMessage.style.color = 'green';
+      } catch (e) {
+        authMessage.textContent = e.message;
+        authMessage.style.color = 'red';
+      }
+    };
 
-        signInButton.addEventListener('click', async () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                authMessage.textContent = `User signed in: ${userCredential.user.email}`;
-                authMessage.style.color = 'green';
-            } catch (error) {
-                authMessage.textContent = `Error signing in: ${error.message}`;
-                authMessage.style.color = 'red';
-            }
-        });
+    document.getElementById('signInButton').onclick = async () => {
+      try {
+        const user = await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+        authMessage.textContent = `Signed in: ${user.user.email}`;
+        authMessage.style.color = 'green';
+      } catch (e) {
+        authMessage.textContent = e.message;
+        authMessage.style.color = 'red';
+      }
+    };
 
-        signOutButton.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-                authMessage.textContent = 'User signed out.';
-                authMessage.style.color = 'green';
-            } catch (error) {
-                authMessage.textContent = `Error signing out: ${error.message}`;
-                authMessage.style.color = 'red';
-            }
-        });
+    // --- Google Sign-In ---
+    const googleProvider = new GoogleAuthProvider();
+    document.getElementById('googleSignInButton').onclick = async () => {
+      const btn = document.getElementById('googleSignInButton');
+      btn.disabled = true;
+      try {
+        const result = await signInWithPopup(auth, googleProvider);
+        authMessage.textContent = `Signed in with Google: ${result.user.email}`;
+        authMessage.style.color = 'green';
+      } catch (e) {
+        authMessage.textContent = e.message;
+        authMessage.style.color = 'red';
+      } finally {
+        btn.disabled = false;
+      }
+    };
 
-        // Listen for authentication state changes
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in
-                authForms.style.display = 'none';
-                userInfo.style.display = 'block';
-                userEmailSpan.textContent = user.email;
-            } else {
-                // User is signed out
-                authForms.style.display = 'block';
-                userInfo.style.display = 'none';
-                userEmailSpan.textContent = '';
-            }
-        });
+    // --- Phone Sign-In ---
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', { size: 'invisible' }, auth);
 
-    </script>
-<script type="module">
-  // Import Firebase functions
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import {
-    getAuth,
-    GoogleAuthProvider,
-    signInWithPopup,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    signOut,
-    RecaptchaVerifier,
-    signInWithPhoneNumber,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    document.getElementById('phoneSignInButton').onclick = async () => {
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      try {
+        const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
+        const code = prompt("Enter the verification code sent to your phone:");
+        const result = await confirmationResult.confirm(code);
+        authMessage.textContent = `Signed in with phone: ${result.user.phoneNumber}`;
+        authMessage.style.color = 'green';
+      } catch (e) {
+        authMessage.textContent = e.message;
+        authMessage.style.color = 'red';
+      }
+    };
 
-  // Firebase config
-  const firebaseConfig = {
-    apiKey: "AIzaSyBjUWLTD0tIUK_vfq0NIAmaagya9mNnEfc",
-    authDomain: "dynamic-organization.firebaseapp.com",
-    projectId: "dynamic-organization",
-    storageBucket: "dynamic-organization.appspot.com",
-    messagingSenderId: "574974660064",
-    appId: "1:574974660064:web:69908bdc3a35ae4884ef85"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // --- Email & Password ---
-  const emailInput = document.getElementById('email');
-  const passwordInput = document.getElementById('password');
-  const authMessage = document.getElementById('authMessage');
-
-  document.getElementById('signUpButton').onclick = async () => {
-    try {
-      const user = await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-      authMessage.textContent = `User created: ${user.user.email}`;
+    // --- Sign Out ---
+    document.getElementById('signOutButton').onclick = async () => {
+      await signOut(auth);
+      authMessage.textContent = 'Signed out';
       authMessage.style.color = 'green';
-    } catch (e) {
-      authMessage.textContent = e.message;
-      authMessage.style.color = 'red';
-    }
-  };
+    };
 
-  document.getElementById('signInButton').onclick = async () => {
-    try {
-      const user = await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
-      authMessage.textContent = `Signed in: ${user.user.email}`;
-      authMessage.style.color = 'green';
-    } catch (e) {
-      authMessage.textContent = e.message;
-      authMessage.style.color = 'red';
-    }
-  };
-
-  // --- Google Sign-In ---
-  const googleProvider = new GoogleAuthProvider();
-  document.getElementById('googleSignInButton').onclick = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      authMessage.textContent = `Signed in with Google: ${result.user.email}`;
-      authMessage.style.color = 'green';
-    } catch (e) {
-      authMessage.textContent = e.message;
-      authMessage.style.color = 'red';
-    }
-  };
-
-  // --- Phone Sign-In ---
-  window.recaptchaVerifier = new RecaptchaVerifier(
-    'recaptcha-container', 
-    { size: 'invisible' }, 
-    auth
-  );
-
-  document.getElementById('phoneSignInButton').onclick = async () => {
-    const phoneNumber = document.getElementById('phoneNumber').value;
-    try {
-      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier);
-      const code = prompt("Enter the verification code sent to your phone:");
-      const result = await confirmationResult.confirm(code);
-      authMessage.textContent = `Signed in with phone: ${result.user.phoneNumber}`;
-      authMessage.style.color = 'green';
-    } catch (e) {
-      authMessage.textContent = e.message;
-      authMessage.style.color = 'red';
-    }
-  };
-
-  // --- Sign Out ---
-  document.getElementById('signOutButton').onclick = async () => {
-    await signOut(auth);
-    authMessage.textContent = 'Signed out';
-    authMessage.style.color = 'green';
-  };
-
-  // --- Auth State Listener ---
-  onAuthStateChanged(auth, (user) => {
-    document.getElementById('auth-forms').style.display = user ? 'none' : 'block';
-    document.getElementById('user-info').style.display = user ? 'block' : 'none';
-    document.getElementById('userEmail').textContent = user?.email || user?.phoneNumber || '';
-  });
-</script>
+    // --- Auth State ---
+    onAuthStateChanged(auth, (user) => {
+      document.getElementById('auth-forms').style.display = user ? 'none' : 'block';
+      document.getElementById('user-info').style.display = user ? 'block' : 'none';
+      document.getElementById('userEmail').textContent = user?.email || user?.phoneNumber || '';
+    });
+  </script>
 
 </body>
 </html>

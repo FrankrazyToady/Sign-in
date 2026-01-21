@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Organization | Dynamic Tech for a Dynamic World</title>
+  <title>Dynamic Organization | Get Started</title>
 
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -13,58 +13,28 @@
 </head>
 <body>
   <div class="container">
+    <!-- Branding -->
     <h1>DYNAMIC ORGANIZATION</h1>
     <p class="tagline">Dynamic Tech for a Dynamic World</p>
 
-    <section id="auth-forms">
-      <h2>Sign In / Sign Up</h2>
-
-      <!-- Email/Password Form -->
-      <form id="emailForm">
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" placeholder="Enter your email" required>
-        </div>
-
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" placeholder="Enter your password" required>
-        </div>
-
-        <button type="submit" id="signInButton" class="auth-button">
-          <i class="fa-solid fa-envelope"></i> Sign In
-        </button>
-        <button type="button" id="signUpButton" class="auth-button">
-          <i class="fa-solid fa-user-plus"></i> Sign Up
-        </button>
-      </form>
-
-      <!-- Google Sign-In -->
-      <button id="googleSignInButton" class="auth-button" aria-label="Sign in with Google">
-        <i class="fa-brands fa-google"></i> Sign in with Google
-      </button>
-
-      <!-- Phone Sign-In -->
-      <div class="form-group">
-        <input type="text" id="phoneNumber" placeholder="+1234567890">
-        <button id="phoneSignInButton" class="auth-button" aria-label="Sign in with Phone">
-          <i class="fa-solid fa-phone"></i> Sign in with Phone
-        </button>
-        <div id="recaptcha-container"></div>
-      </div>
-
-      <!-- Verification Code (for phone auth) -->
-      <div class="form-group">
-        <input type="text" id="verificationCode" placeholder="Enter verification code">
-        <button id="confirmCodeButton" class="auth-button">Confirm Code</button>
-      </div>
-
-      <!-- Auth Messages -->
-      <p id="authMessage" class="message"></p>
+    <!-- Welcome Section -->
+    <section class="welcome">
+      <h2>Welcome</h2>
+      <p>Join us in building innovative, secure, and dynamic technologies that empower communities worldwide.</p>
     </section>
+
+    <!-- Get Started Buttons -->
+    <div class="button-group">
+      <a href="login.html" class="auth-button">
+        <i class="fa-solid fa-right-to-bracket"></i> Login
+      </a>
+      <a href="register.html" class="auth-button">
+        <i class="fa-solid fa-user-plus"></i> Register
+      </a>
+    </div>
   </div>
 
-  <!-- Firebase Auth JS -->
-  <script type="module" src="auth.js"></script>
+  <!-- Transition & Effects -->
+  <script src="script.js"></script>
 </body>
 </html>
